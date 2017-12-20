@@ -1,7 +1,8 @@
-package mustafaozhan.github.com.simplephotogallery
+package mustafaozhan.github.com.simplephotogallery.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import mustafaozhan.github.com.simplephotogallery.R
 
 class MainActivity : AppCompatActivity() {
 
