@@ -8,7 +8,7 @@
 
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/mToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -19,18 +19,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v4.widget.DrawerLayout
-        android:id="@+id/myDrawerLayout"
+        android:id="@+id/mDrawerLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/mToolbar">
 
         <include layout="@layout/main_content" />
 
         <android.support.design.widget.NavigationView
-            android:id="@+id/navigation"
+            android:id="@+id/mNavigation"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start" />
