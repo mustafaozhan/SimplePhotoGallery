@@ -9,6 +9,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/mToolbar"
+        app:titleTextColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"

@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.ic_launcher_foreground))
+        supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.menu))
 
 
         val extra = intent.extras
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         setListeners()
 
-        supportActionBar!!.title = "Folders"
+
 
 
     }
@@ -58,11 +58,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onDrawerClosed(drawerView: View?) {
-                supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.ic_launcher_foreground))
+                supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.menu))
+                supportActionBar!!.title = resources.getString(R.string.app_name)
             }
 
             override fun onDrawerOpened(drawerView: View?) {
                 supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.abc_ic_ab_back_material))
+                supportActionBar!!.title = "Folders"
             }
 
         })
