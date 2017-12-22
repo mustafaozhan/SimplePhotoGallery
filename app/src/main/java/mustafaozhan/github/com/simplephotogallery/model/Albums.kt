@@ -6,10 +6,10 @@ import android.os.Parcelable
 /**
  * Created by Mustafa Ozhan on 12/20/17 at 5:48 PM on Arch Linux.
  */
-data class Albums(private var folderNames: String,
-                  private var imagePath: String,
-                  private var imageCount: Int,
-                  private var isVideo: Boolean) : Parcelable {
+data class Albums(var folderNames: String,
+                  var imagePath: String,
+                  var imageCount: Int,
+                  var isVideo: Boolean) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),

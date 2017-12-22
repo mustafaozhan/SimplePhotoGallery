@@ -15,7 +15,6 @@ import android.util.Log
 import android.widget.Toast
 import mustafaozhan.github.com.simplephotogallery.R
 import mustafaozhan.github.com.simplephotogallery.model.Albums
-import mustafaozhan.github.com.simplephotogallery.ui.MainActivity
 
 class SplashActivity : AppCompatActivity() {
     companion object {

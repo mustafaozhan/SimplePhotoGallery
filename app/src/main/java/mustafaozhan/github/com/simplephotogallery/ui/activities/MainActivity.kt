@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.simplephotogallery.ui
+package mustafaozhan.github.com.simplephotogallery.ui.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
         setListeners()
 
 
-
-
     }
 
     private fun setListeners() {
@@ -54,15 +52,15 @@ class MainActivity : AppCompatActivity() {
             override fun onDrawerStateChanged(newState: Int) {
             }
 
-            override fun onDrawerSlide(drawerView: View?, slideOffset: Float) {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
-            override fun onDrawerClosed(drawerView: View?) {
+            override fun onDrawerClosed(drawerView: View) {
                 supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.menu))
                 supportActionBar!!.title = resources.getString(R.string.app_name)
             }
 
-            override fun onDrawerOpened(drawerView: View?) {
+            override fun onDrawerOpened(drawerView: View) {
                 supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.abc_ic_ab_back_material))
                 supportActionBar!!.title = "Folders"
             }
