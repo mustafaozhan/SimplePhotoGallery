@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_album.*
 import mustafaozhan.github.com.simplephotogallery.R
 
 class AlbumActivity : AppCompatActivity() {
-
+    private var adapter: SingleAlbumAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album)
@@ -28,12 +28,12 @@ class AlbumActivity : AppCompatActivity() {
         val folderName = intent.getStringExtra("folder_name")
         supportActionBar!!.setTitle("" + folderName)
         val isVideo = intent.getBooleanExtra("isVideo", false)
-        init_ui_views(folderName, isVideo)
+        initUiViews(folderName, isVideo)
 
     }
-    var adapter: SingleAlbumAdapter? = null
 
-    private fun init_ui_views(folderName: String?, isVideo: Boolean?) {
+
+    private fun initUiViews(folderName: String?, isVideo: Boolean?) {
 
         val options = RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE).override(160, 160).skipMemoryCache(true).error(R.drawable.ic_image_unavailable)
@@ -65,25 +65,24 @@ class AlbumActivity : AppCompatActivity() {
 
     private fun getAllShownImagesPath(activity: Activity, folderName: String?, isVideo: Boolean?): MutableList<String> {
 
-        val uri: Uri
+        val uri: Uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val cursorBucket: Cursor
-        val column_index_data: Int
+        val columnIndexData: Int
         val listOfAllImages = ArrayList<String>()
         var absolutePathOfImage: String? = null
 
-        val selectionArgs = arrayOf("%" + folderName + "%")
+        val selectionArgs = arrayOf("%$folderName%")
 
-        uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val selection = MediaStore.Images.Media.DATA + " like ? "
 
         val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
 
         cursorBucket = activity.contentResolver.query(uri, projectionOnlyBucket, selection, selectionArgs, null)
 
-        column_index_data = cursorBucket.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+        columnIndexData = cursorBucket.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
 
         while (cursorBucket.moveToNext()) {
-            absolutePathOfImage = cursorBucket.getString(column_index_data)
+            absolutePathOfImage = cursorBucket.getString(columnIndexData)
             if (absolutePathOfImage != "" && absolutePathOfImage != null)
                 listOfAllImages.add(absolutePathOfImage)
         }
