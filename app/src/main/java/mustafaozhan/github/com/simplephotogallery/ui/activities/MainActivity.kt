@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
             folderName = savedInstanceState.getString("folder_name")
 
         setSupportActionBar(mToolbar)
-
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.menu))
 
