@@ -1,19 +1,22 @@
 package mustafaozhan.github.com.simplephotogallery.ui.adapters
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.list_layout.view.*
 import mustafaozhan.github.com.simplephotogallery.R
+import mustafaozhan.github.com.simplephotogallery.ui.activities.AlbumActivity
 
 /**
  * Created by Mustafa Ozhan on 12/31/17 at 8:54 PM on Arch Linux.
  */
-class SingleAlbumAdapter(val albumList: MutableList<String>, val context: Context, val options: RequestOptions, val glide: RequestBuilder<Bitmap>, val glideMain: RequestManager, val inOnItemClick: IOnItemClick) : RecyclerView.Adapter<SingleAlbumAdapter.ViewHolder>() {
+class SingleAlbumAdapter(val albumList: MutableList<String>, val context: Context, val options: RequestOptions, val glide: RequestBuilder<Bitmap>, val glideMain: RequestManager, val inOnItemClick: AlbumActivity) : RecyclerView.Adapter<SingleAlbumAdapter.ViewHolder>() {
 
 
     override fun onViewRecycled(holder: ViewHolder?) {

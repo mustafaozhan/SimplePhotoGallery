@@ -14,8 +14,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_album.*
 import mustafaozhan.github.com.simplephotogallery.R
+import mustafaozhan.github.com.simplephotogallery.ui.adapters.AlbumFoldersAdapter
+import mustafaozhan.github.com.simplephotogallery.ui.adapters.SingleAlbumAdapter
 
-class AlbumActivity : AppCompatActivity() {
+class AlbumActivity : AppCompatActivity(), AlbumFoldersAdapter.IOnItemClick {
+    override fun onItemClick(position: String, isVideo: Boolean) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private var adapter: SingleAlbumAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +42,7 @@ class AlbumActivity : AppCompatActivity() {
     private fun initUiViews(folderName: String?, isVideo: Boolean?) {
 
         val options = RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE).override(160, 160).skipMemoryCache(true).error(R.drawable.ic_image_unavailable)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE).override(160, 160).skipMemoryCache(true).error(R.drawable.icon)
         val glide = Glide.with(this)
         val builder = glide.asBitmap()
 
