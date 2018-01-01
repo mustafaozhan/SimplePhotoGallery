@@ -1,14 +1,11 @@
 package mustafaozhan.github.com.simplephotogallery.ui.adapters
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.list_layout.view.*
 import mustafaozhan.github.com.simplephotogallery.R
 import mustafaozhan.github.com.simplephotogallery.ui.activities.AlbumActivity
@@ -16,7 +13,7 @@ import mustafaozhan.github.com.simplephotogallery.ui.activities.AlbumActivity
 /**
  * Created by Mustafa Ozhan on 12/31/17 at 8:54 PM on Arch Linux.
  */
-class SingleAlbumAdapter(val albumList: MutableList<String>, val context: Context, val options: RequestOptions, val glide: RequestBuilder<Bitmap>, val glideMain: RequestManager, val inOnItemClick: AlbumActivity) : RecyclerView.Adapter<SingleAlbumAdapter.ViewHolder>() {
+class SingleAlbumAdapter(private val albumList: MutableList<String>, private val glide: RequestBuilder<Bitmap>, private val inOnItemClick: AlbumActivity) : RecyclerView.Adapter<SingleAlbumAdapter.ViewHolder>() {
 
 
     override fun onViewRecycled(holder: ViewHolder?) {
@@ -25,19 +22,12 @@ class SingleAlbumAdapter(val albumList: MutableList<String>, val context: Contex
         super.onViewRecycled(holder)
     }
 
-    override fun onViewDetachedFromWindow(holder: ViewHolder) {
-        if (holder != null) {
-
-        }
-        super.onViewDetachedFromWindow(holder)
-    }
-
     override fun getItemCount(): Int {
         return albumList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.bindItems(albumList.get(position), glide, options, inOnItemClick)
+        holder?.bindItems(albumList[position], glide, inOnItemClick)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,16 +36,12 @@ class SingleAlbumAdapter(val albumList: MutableList<String>, val context: Contex
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindItems(albumList: String, glide: RequestBuilder<Bitmap>, options: RequestOptions, inOnItemClick: AlbumFoldersAdapter.IOnItemClick) {
+        fun bindItems(albumList: String, glide: RequestBuilder<Bitmap>, inOnItemClick: AlbumFoldersAdapter.IOnItemClick) {
 
-            glide.load(albumList).apply { options }.thumbnail(0.4f)
+            glide.load(albumList).thumbnail(0.4f)
                     .into(itemView.thumbnail)
 
-            itemView.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(p0: View?) {
-                    inOnItemClick.onItemClick(albumList, false)
-                }
-            })
+            itemView.setOnClickListener { inOnItemClick.onItemClick(albumList, false) }
         }
     }
 }

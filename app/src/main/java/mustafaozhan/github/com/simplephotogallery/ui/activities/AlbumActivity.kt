@@ -1,5 +1,6 @@
 package mustafaozhan.github.com.simplephotogallery.ui.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.database.Cursor
 import android.net.Uri
@@ -32,29 +33,27 @@ class AlbumActivity : AppCompatActivity(), AlbumFoldersAdapter.IOnItemClick {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val folderName = intent.getStringExtra("folder_name")
-        supportActionBar!!.setTitle("" + folderName)
-        val isVideo = intent.getBooleanExtra("isVideo", false)
-        initUiViews(folderName, isVideo)
+        supportActionBar!!.title = "" + folderName
+        intent.getBooleanExtra("isVideo", false)
+        initUiViews(folderName)
 
     }
 
 
-    private fun initUiViews(folderName: String?, isVideo: Boolean?) {
+    @SuppressLint("CheckResult")
+    private fun initUiViews(folderName: String?) {
 
-        val options = RequestOptions()
+        RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE).override(160, 160).skipMemoryCache(true).error(R.drawable.icon)
         val glide = Glide.with(this)
         val builder = glide.asBitmap()
 
         rvAlbumSelected.layoutManager = GridLayoutManager(this, 2)
         rvAlbumSelected?.setHasFixedSize(true)
-        adapter = SingleAlbumAdapter(getAllShownImagesPath(this, folderName, isVideo), this, options, builder, glide, this)
+        adapter = SingleAlbumAdapter(getAllShownImagesPath(this, folderName), builder, this)
         rvAlbumSelected?.adapter = adapter
 
         rvAlbumSelected?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-            }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -69,13 +68,13 @@ class AlbumActivity : AppCompatActivity(), AlbumFoldersAdapter.IOnItemClick {
 
 // Read all images path from specified directory.
 
-    private fun getAllShownImagesPath(activity: Activity, folderName: String?, isVideo: Boolean?): MutableList<String> {
+    private fun getAllShownImagesPath(activity: Activity, folderName: String?): MutableList<String> {
 
         val uri: Uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val cursorBucket: Cursor
         val columnIndexData: Int
         val listOfAllImages = ArrayList<String>()
-        var absolutePathOfImage: String? = null
+        var absolutePathOfImage: String?
 
         val selectionArgs = arrayOf("%$folderName%")
 
@@ -92,6 +91,7 @@ class AlbumActivity : AppCompatActivity(), AlbumFoldersAdapter.IOnItemClick {
             if (absolutePathOfImage != "" && absolutePathOfImage != null)
                 listOfAllImages.add(absolutePathOfImage)
         }
+        cursorBucket.close()
         return listOfAllImages.asReversed()
     }
 

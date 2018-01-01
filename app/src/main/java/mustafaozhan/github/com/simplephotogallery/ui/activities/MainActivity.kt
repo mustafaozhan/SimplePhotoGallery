@@ -1,14 +1,13 @@
 package mustafaozhan.github.com.simplephotogallery.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
-import android.view.MenuItem
 import android.view.View
 import android.widget.AbsListView
 import com.bumptech.glide.Glide
@@ -20,48 +19,47 @@ import mustafaozhan.github.com.simplephotogallery.R
 import mustafaozhan.github.com.simplephotogallery.model.Albums
 import mustafaozhan.github.com.simplephotogallery.ui.adapters.AlbumFoldersAdapter
 
-class MainActivity : AppCompatActivity(),AlbumFoldersAdapter.IOnItemClick {
+class MainActivity : AppCompatActivity(), AlbumFoldersAdapter.IOnItemClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val savedState = savedInstanceState
-
-        if (savedState != null)
-            folder_name = savedInstanceState!!.getString("folder_name")
+        if (savedInstanceState != null)
+            folderName = savedInstanceState.getString("folderName")
 
         setSupportActionBar(my_toolbar)
         // Enable the Up button
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.camera))
+        supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.menu))
 
         setupNavigationView()
 
-        var extra = intent.extras;
+        val extra = intent.extras
         if (extra != null) {
-            var extraData = extra.get("image_url_data") as ArrayList<Albums>
-            select_fragment(extraData)
+            val extraData = extra.get("image_url_data") as ArrayList<Albums>
+            selectFragment(extraData)
         }
 
-        drawer_layout_listener()
-        supportActionBar!!.setTitle("Folders")
+        drawerLayoutListener()
+        supportActionBar!!.title = "Folders"
     }
 
     override fun onItemClick(position: String, isVideo: Boolean) {
 
-        var bundle = Bundle()
-        bundle.putString("folder_name", position)
-        var intent = Intent(this, AlbumActivity::class.java)
-        intent.putExtra("folder_name", position)
+        val bundle = Bundle()
+        bundle.putString("folderName", position)
+        val intent = Intent(this, AlbumActivity::class.java)
+        intent.putExtra("folderName", position)
         startActivity(intent)
     }
 
-    private var folder_name: String = ""
+    private var folderName: String = ""
 
-    public fun select_fragment(imagesList: ArrayList<Albums>) {
+    @SuppressLint("CheckResult")
+    private fun selectFragment(imagesList: ArrayList<Albums>) {
 
-        val options = RequestOptions()
+        RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE).override(160, 160).skipMemoryCache(true).error(R.drawable.camera)
         val glide = Glide.with(this)
 
@@ -71,13 +69,10 @@ class MainActivity : AppCompatActivity(),AlbumFoldersAdapter.IOnItemClick {
         rvAlbums?.setHasFixedSize(true)
 
         // AlbumFoldersAdapter.kt is RecyclerView Adapter class. we will implement shortly.
-        rvAlbums?.adapter = AlbumFoldersAdapter(imagesList, this, options, builder, glide, this)
+        rvAlbums?.adapter = AlbumFoldersAdapter(imagesList, builder, this)
 
 
         rvAlbums?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-            }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -89,16 +84,13 @@ class MainActivity : AppCompatActivity(),AlbumFoldersAdapter.IOnItemClick {
         }
         )
 
-        fab_camera?.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-             //   launchCamera()
-            }
+        fab_camera?.setOnClickListener {
+            //   launchCamera()
         }
-        )
     }
 
     // drawer layout click listener in Kotlin source code.
-    private fun drawer_layout_listener() {
+    private fun drawerLayoutListener() {
 
         drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
@@ -115,7 +107,6 @@ class MainActivity : AppCompatActivity(),AlbumFoldersAdapter.IOnItemClick {
             }
 
 
-
         }
         )
     }
@@ -123,18 +114,16 @@ class MainActivity : AppCompatActivity(),AlbumFoldersAdapter.IOnItemClick {
     // Navigation item click listener Kotlin source code.
     private fun setupNavigationView() {
 
-        navigation.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener {
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                drawer_layout.closeDrawer(Gravity.START)
-                when (item.itemId) {
+        navigation.setNavigationItemSelectedListener { item ->
+            drawer_layout.closeDrawer(Gravity.START)
+            when (item.itemId) {
 //                    R.id.nav_all_folders -> {
 //                    }
 //                    R.id.nav_hidden_folders -> {
 //                    }
-                }
-                return false
             }
-        })
+            false
+        }
     }
 
 

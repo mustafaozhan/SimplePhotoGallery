@@ -19,11 +19,10 @@ class SingleActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
 
-        val folder_name = intent.getStringExtra("folder_name")
-        Glide.with(this).load(folder_name).into(imageFullScreenView)
+        val folderName = intent.getStringExtra("folder_name")
+        Glide.with(this).load(folderName).into(imageFullScreenView)
 
-        Handler().postDelayed(Runnable
-        {
+        Handler().postDelayed({
             if (supportActionBar != null)
                 appbar.animate().translationY(-appbar.bottom.toFloat()).setInterpolator(AccelerateInterpolator()).start()
             //isAppBarShown = false
